@@ -9,7 +9,10 @@ import About from './pages/About.jsx';
 import Contacts from './pages/Contacts.jsx';
 
 function cartTotal(lines) {
-  return lines.reduce((sum, line) => sum + line.product.price * line.quantity, 0);
+  return lines.reduce(
+    (sum, line) => sum + line.product.price * line.quantity,
+    0,
+  );
 }
 
 function cartItemCount(lines) {
@@ -23,6 +26,7 @@ export default function App() {
   /** Each item: { product, quantity } */
   const [cart, setCart] = useState([]);
 
+  // product loading logic
   useEffect(() => {
     fetchProducts()
       .then((data) => {
@@ -38,7 +42,7 @@ export default function App() {
   function addToCart(product) {
     setCart((prev) => {
       const i = prev.findIndex(
-        (line) => String(line.product.id) === String(product.id)
+        (line) => String(line.product.id) === String(product.id),
       );
       if (i >= 0) {
         const next = [...prev];
@@ -54,7 +58,7 @@ export default function App() {
 
   function removeFromCart(productId) {
     setCart((prev) =>
-      prev.filter((line) => String(line.product.id) !== String(productId))
+      prev.filter((line) => String(line.product.id) !== String(productId)),
     );
   }
 
@@ -67,8 +71,8 @@ export default function App() {
       prev.map((line) =>
         String(line.product.id) === String(productId)
           ? { ...line, quantity }
-          : line
-      )
+          : line,
+      ),
     );
   }
 
